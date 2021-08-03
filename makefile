@@ -14,6 +14,9 @@ $(EXEC_FILE): ./obj/main.o ./obj/renderwindow.o
 ./obj/renderwindow.o: ./src/renderwindow.cpp
 	$(CC) ./src/renderwindow.cpp -o ./obj/renderwindow.o $(FLAGSO)
 
+./obj/math.o: ./src/math.cpp
+	$(CC) ./src/math.cpp -o ./obj/math.o $(FLAGSO)
+
 clean:
 	rm ./obj/*.o
 	rm ./build/main
