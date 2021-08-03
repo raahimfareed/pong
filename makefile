@@ -17,6 +17,9 @@ $(EXEC_FILE): ./obj/main.o ./obj/renderwindow.o
 ./obj/math.o: ./src/math.cpp
 	$(CC) ./src/math.cpp -o ./obj/math.o $(FLAGSO)
 
+./obj/entity.o: ./src/entity.cpp
+	$(CC) ./src/entity.cpp -o ./obj/entity.o $(FLAGSO)
+
 clean:
 	rm ./obj/*.o
 	rm ./build/main
