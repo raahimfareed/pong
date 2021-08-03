@@ -5,7 +5,7 @@ FLAGSO := -Wall -g -c -m64 -std=c++20 $(INCLUDE)
 FLAGSB := -O3 -s $(LIBS)
 EXEC_FILE := ./build/main
 
-$(EXEC_FILE): ./obj/main.o ./obj/renderwindow.o
+$(EXEC_FILE): ./obj/main.o ./obj/renderwindow.o ./obj/math.o ./obj/entity.o
 	$(CC) ./obj/*.o -o ./build/main $(FLAGSB)
 
 ./obj/main.o: ./src/main.cpp

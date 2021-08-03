@@ -13,6 +13,7 @@ public:
     Vector2f& rGetPosition();
     Vector2f& rGetDimensions();
     SDL_Rect getCurrentFrame() const;
+    SDL_Texture* pGetTexture() const;
 
 protected:
     SDL_Texture* mpTexture;

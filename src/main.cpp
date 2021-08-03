@@ -3,6 +3,8 @@
 #include <SDL2/SDL.h>
 
 #include "RenderWindow.hpp"
+#include "Math.hpp"
+#include "Entity.hpp"
 
 RenderWindow gWindow;
 
@@ -15,6 +17,14 @@ int main(int argc, char* args[])
     SDL_Event event;
 
     SDL_Texture* pGhost = gWindow.pLoadTexture("./assets/ghost.png");
+
+    SDL_Rect c;
+    c.x = 0;
+    c.y = 0;
+    c.w = 16;
+    c.h = 16;
+
+    Entity ghost(pGhost, {0, 0, 16, 16});
 
     while (!gQuit)
     {
@@ -29,7 +39,7 @@ int main(int argc, char* args[])
         }
 
         gWindow.clear();
-        gWindow.render(pGhost);
+        gWindow.render(ghost);
         gWindow.display();
     }
 

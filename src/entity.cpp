@@ -6,7 +6,7 @@ Entity::Entity()
 {}
 
 Entity::Entity(SDL_Texture* pTexture, SDL_Rect currentFrame, Vector2f position, Vector2f dimensions)
-    :mpTexture(pTexture), mCurrentFrame(currentFrame), mPosition(position), mDimensions(mDimensions)
+    :mpTexture(pTexture), mCurrentFrame(currentFrame), mPosition(position), mDimensions(dimensions)
 {}
 
 Vector2f& Entity::rGetPosition()
@@ -22,4 +22,9 @@ Vector2f& Entity::rGetDimensions()
 SDL_Rect Entity::getCurrentFrame() const
 {
     return mCurrentFrame;
+}
+
+SDL_Texture* Entity::pGetTexture() const
+{
+    return mpTexture;
 }

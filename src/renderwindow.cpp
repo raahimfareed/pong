@@ -4,6 +4,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "RenderWindow.hpp"
+#include "Entity.hpp"
 
 RenderWindow::RenderWindow()
     :mpWindow(nullptr), mpRenderer(nullptr), mBackgroundColor({0, 0, 0, 255})
@@ -80,6 +81,23 @@ void RenderWindow::render(SDL_Texture* pTexture)
     dst.h = 16;
 
     SDL_RenderCopy(mpRenderer, pTexture, &src, &dst);
+}
+
+void RenderWindow::render(Entity& rEntity)
+{
+    SDL_Rect src;
+    src.x = rEntity.getCurrentFrame().x;
+    src.y = rEntity.getCurrentFrame().y;
+    src.w = rEntity.getCurrentFrame().w;
+    src.h = rEntity.getCurrentFrame().h;
+
+    SDL_Rect dst;
+    dst.x = rEntity.rGetPosition().mX;
+    dst.y = rEntity.rGetPosition().mY;
+    dst.w = rEntity.rGetDimensions().mX;
+    dst.h = rEntity.rGetDimensions().mY;
+
+    SDL_RenderCopy(mpRenderer, rEntity.pGetTexture(), &src, &dst);
 }
 
 void RenderWindow::display()
