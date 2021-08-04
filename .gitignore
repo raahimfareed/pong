@@ -2,3 +2,5 @@ obj
 build
 bin
 .vscode
+vgcore.*
+assets/ghost.png
