@@ -1,12 +1,16 @@
 #include <cstdio>
+#include <map>
 
 #include <SDL2/SDL.h>
 
 #include "RenderWindow.hpp"
 #include "Math.hpp"
 #include "Entity.hpp"
+#include "Game.hpp"
 
+Game* gpGame;
 RenderWindow gWindow;
+std::map<const char*, SDL_Texture*> gTextures;
 
 bool init();
 
@@ -14,36 +18,11 @@ bool gQuit = !init();
 
 int main(int argc, char* args[])
 {
-    SDL_Event event;
 
-    SDL_Texture* pGhost = gWindow.pLoadTexture("./assets/ghost.png");
-
-    SDL_Rect c;
-    c.x = 0;
-    c.y = 0;
-    c.w = 16;
-    c.h = 16;
-
-    Entity ghost(pGhost, {0, 0, 16, 16});
-
-    while (!gQuit)
-    {
-        while (SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-                case SDL_QUIT:
-                    gQuit = true;
-                    break;
-            }
-        }
-
-        gWindow.clear();
-        gWindow.render(ghost);
-        gWindow.display();
-    }
+    gpGame->loop();
 
     gWindow.cleanUp();
+    delete gpGame;
     SDL_Quit();
     return 0;
 }
@@ -63,6 +42,10 @@ bool init()
     }
 
     gWindow.create("TEH GAYM", 480, 272);
+
+    gTextures["ghost"] = gWindow.pLoadTexture("./assets/ghost.png");
+
+    gpGame = new Game(&gWindow, &gTextures);
 
     return true;
 }
