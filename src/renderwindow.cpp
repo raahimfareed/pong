@@ -20,7 +20,7 @@ RenderWindow::RenderWindow(const char* title, int w, int h, SDL_Color bgColor)
         printf("[Error]: Failed to initialize window.\n[SDL Error]: %s\n", SDL_GetError());
     }
 
-    mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_ACCELERATED);
+    mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if (mpRenderer == nullptr)
     {
@@ -52,7 +52,7 @@ void RenderWindow::create(const char* title, int w, int h)
         printf("[Error]: Failed to initialize window.\n[SDL Error]: %s\n", SDL_GetError());
     }
 
-    mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_ACCELERATED);
+    mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if (mpRenderer == nullptr)
     {
