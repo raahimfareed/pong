@@ -12,33 +12,29 @@ Game* gpGame;
 RenderWindow gWindow;
 std::map<const char*, SDL_Texture*> gTextures;
 
-bool init();
-
-bool gQuit = !init();
+void init();
+void cleanUp();
 
 int main(int argc, char* args[])
 {
+    init();
 
     gpGame->loop();
 
-    gWindow.cleanUp();
-    delete gpGame;
-    SDL_Quit();
+    cleanUp();
     return 0;
 }
 
-bool init()
+void init()
 {
     if (SDL_Init(SDL_INIT_VIDEO) > 0)
     {
         printf("[Error]: Failed to Initialize SDL.\n[SDL Error]: %s\n", SDL_GetError());
-        return false;
     }
 
     if (!(IMG_Init(IMG_INIT_PNG)))
     {
         printf("[Error]: Failed to Initialize IMG.\n[IMG Error]: %s\n", IMG_GetError());
-        return false;
     }
 
     gWindow.create("TEH GAYM", 480, 272);
@@ -46,6 +42,11 @@ bool init()
     gTextures["ghost"] = gWindow.pLoadTexture("./assets/ghost.png");
 
     gpGame = new Game(&gWindow, &gTextures);
+}
 
-    return true;
+void cleanUp()
+{
+    gWindow.cleanUp();
+    delete gpGame;
+    SDL_Quit();
 }
