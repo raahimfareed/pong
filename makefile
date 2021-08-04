@@ -5,7 +5,7 @@ FLAGSO := -Wall -g -c -m64 -std=c++20 $(INCLUDE)
 FLAGSB := -O3 -s $(LIBS)
 EXEC_FILE := ./build/main
 
-$(EXEC_FILE): ./obj/main.o ./obj/renderwindow.o ./obj/math.o ./obj/entity.o ./obj/game.o ./obj/input.o ./obj/player.o
+$(EXEC_FILE): ./obj/main.o ./obj/renderwindow.o ./obj/math.o ./obj/entity.o ./obj/game.o ./obj/input.o ./obj/player.o ./obj/world.o ./obj/config.o
 	$(CC) ./obj/*.o -o ./build/main $(FLAGSB)
 
 ./obj/main.o: ./src/main.cpp
@@ -28,6 +28,12 @@ $(EXEC_FILE): ./obj/main.o ./obj/renderwindow.o ./obj/math.o ./obj/entity.o ./ob
 
 ./obj/player.o: ./src/player.cpp
 	$(CC) ./src/player.cpp -o ./obj/player.o $(FLAGSO)
+
+./obj/world.o: ./src/world.cpp
+	$(CC) ./src/world.cpp -o ./obj/world.o $(FLAGSO)
+
+./obj/config.o: ./src/config.cpp
+	$(CC) ./src/config.cpp -o ./obj/config.o $(FLAGSO)
 
 clean:
 	rm ./obj/*.o
