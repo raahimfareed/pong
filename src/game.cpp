@@ -1,4 +1,11 @@
+#include <map>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
 #include "Game.hpp"
+#include "RenderWindow.hpp"
+#include "Input.hpp"
 
 Game::Game(RenderWindow* pWindow, std::map<const char*, SDL_Texture*>* pTextures)
     :mpWindow(pWindow), mpTextures(pTextures), mQuit(false)
@@ -6,7 +13,10 @@ Game::Game(RenderWindow* pWindow, std::map<const char*, SDL_Texture*>* pTextures
 
 void Game::logic()
 {
-    //
+    if (Input::isPressed(SDLK_q))
+    {
+        mQuit = true;
+    }
 }
 
 void Game::loop()
@@ -19,6 +29,18 @@ void Game::loop()
             {
                 case SDL_QUIT:
                     mQuit = true;
+                    break;
+                case SDL_KEYDOWN:
+                    Input::handleKeyPress(mEvent);
+                    break;
+                case SDL_KEYUP:
+                    Input::handleKeyRelease(mEvent);
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    Input::handleMouseClick(mEvent);
+                    break;
+                case SDL_MOUSEBUTTONUP:
+                    Input::handleMouseRelease(mEvent);
                     break;
             }
         }
