@@ -5,7 +5,9 @@ Game::Game(RenderWindow* pWindow, std::map<const char*, SDL_Texture*>* pTextures
 {}
 
 void Game::logic()
-{}
+{
+    //
+}
 
 void Game::loop()
 {
@@ -27,4 +29,9 @@ void Game::loop()
         mpWindow->render(mpTextures->at("ghost"));
         mpWindow->display();
     }
+}
+
+Game::~Game()
+{
+    printf("Released game from heap\n");
 }

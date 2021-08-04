@@ -12,6 +12,7 @@ public:
     Game(RenderWindow* pWindow, std::map<const char*, SDL_Texture*>* pTextures);
     void logic();
     void loop();
+    ~Game();
 
 private:
     RenderWindow* mpWindow;
