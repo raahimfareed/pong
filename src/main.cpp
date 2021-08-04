@@ -7,6 +7,7 @@
 #include "Math.hpp"
 #include "Entity.hpp"
 #include "Game.hpp"
+#include "Config.hpp"
 
 Game* gpGame;
 RenderWindow gWindow;
@@ -37,9 +38,9 @@ void init()
         printf("[Error]: Failed to Initialize IMG.\n[IMG Error]: %s\n", IMG_GetError());
     }
 
-    gWindow.create("TEH GAYM", 480, 272);
+    gWindow.create("TEH GAYM", Config::screenWidth, Config::screenHeight);
 
-    gTextures["ghost"] = gWindow.pLoadTexture("./assets/ghost.png");
+    gTextures["white-pixel"] = gWindow.pLoadTexture("./assets/white-pixel.png");
 
     gpGame = new Game(&gWindow, &gTextures);
 }
