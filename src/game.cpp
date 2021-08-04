@@ -6,10 +6,13 @@
 #include "Game.hpp"
 #include "RenderWindow.hpp"
 #include "Input.hpp"
+#include "World.hpp"
 
 Game::Game(RenderWindow* pWindow, std::map<const char*, SDL_Texture*>* pTextures)
-    :mpWindow(pWindow), mpTextures(pTextures), mQuit(false)
-{}
+    :mpWindow(pWindow), mpTextures(pTextures), mpWorld(nullptr), mQuit(false)
+{
+    mpWorld = new World(mpTextures);
+}
 
 void Game::logic()
 {
@@ -17,6 +20,36 @@ void Game::logic()
     {
         mQuit = true;
     }
+
+    if (Input::isPressed(SDLK_UP) || Input::isPressed(SDLK_DOWN))
+    {
+        if (Input::isPressed(SDLK_UP))
+            mpWorld->rGetRightPlayer().up();
+
+        if (Input::isPressed(SDLK_DOWN))
+            mpWorld->rGetRightPlayer().down();
+    }
+    else
+    {
+        mpWorld->rGetRightPlayer().stop();
+    }
+
+    if (Input::isPressed(SDLK_w) || Input::isPressed(SDLK_s))
+    {
+        if (Input::isPressed(SDLK_w))
+            mpWorld->rGetLeftPlayer().up();
+
+        if (Input::isPressed(SDLK_s))
+            mpWorld->rGetLeftPlayer().down();
+    }
+    else
+    {
+        mpWorld->rGetLeftPlayer().stop();
+    }
+
+
+    mpWorld->rGetLeftPlayer().update();
+    mpWorld->rGetRightPlayer().update();
 }
 
 void Game::loop()
@@ -48,12 +81,13 @@ void Game::loop()
         logic();
 
         mpWindow->clear();
-        mpWindow->render(mpTextures->at("ghost"));
+        mpWindow->render(*mpWorld);
         mpWindow->display();
     }
 }
 
 Game::~Game()
 {
+    delete mpWorld;
     printf("Released game from heap\n");
 }

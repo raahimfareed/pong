@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "RenderWindow.hpp"
+#include "World.hpp"
 
 class Game
 {
@@ -18,5 +19,6 @@ private:
     RenderWindow* mpWindow;
     std::map<const char*, SDL_Texture*>* mpTextures;
     SDL_Event mEvent;
+    World* mpWorld;
     bool mQuit;
 };
