@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "Entity.hpp"
+#include "World.hpp"
 
 class RenderWindow
 {
@@ -16,6 +17,7 @@ public:
     void clear();
     void render(SDL_Texture* pTexture);
     void render(Entity& rEntity);
+    void render(World& rWorld);
     void display();
     void cleanUp();
 

@@ -5,6 +5,7 @@
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
+#include "World.hpp"
 
 RenderWindow::RenderWindow()
     :mpWindow(nullptr), mpRenderer(nullptr), mBackgroundColor({0, 0, 0, 255})
@@ -98,6 +99,12 @@ void RenderWindow::render(Entity& rEntity)
     dst.h = rEntity.rGetDimensions().mY;
 
     SDL_RenderCopy(mpRenderer, rEntity.pGetTexture(), &src, &dst);
+}
+
+void RenderWindow::render(World& rWorld)
+{
+    render(rWorld.rGetLeftPlayer());
+    render(rWorld.rGetRightPlayer());
 }
 
 void RenderWindow::display()
