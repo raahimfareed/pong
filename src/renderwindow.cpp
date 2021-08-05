@@ -6,6 +6,7 @@
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include "World.hpp"
+#include "Config.hpp"
 
 RenderWindow::RenderWindow()
     :mpWindow(nullptr), mpRenderer(nullptr), mBackgroundColor({0, 0, 0, 255})
@@ -105,6 +106,28 @@ void RenderWindow::render(World& rWorld)
 {
     render(rWorld.rGetLeftPlayer());
     render(rWorld.rGetRightPlayer());
+    render(rWorld.rGetBall());
+}
+
+void RenderWindow::renderCenter(Vector2f position, const char* pText, TTF_Font* pFont, SDL_Color color)
+{
+    SDL_Surface* pSurfaceMessage = TTF_RenderText_Blended(pFont, pText, color);
+    SDL_Texture* pMessage = SDL_CreateTextureFromSurface(mpRenderer,  pSurfaceMessage);
+
+    SDL_Rect source;
+    source.x = 0;
+    source.y = 0;
+    source.w = pSurfaceMessage->w;
+    source.h = pSurfaceMessage->h;
+
+    SDL_Rect destination;
+    destination.x = Config::screenWidth/2 - source.w/2 + position.mX;
+    destination.y = Config::screenHeight/2 - source.h/2 + position.mY;
+    destination.w = source.w;
+    destination.h = source.h;
+
+    SDL_RenderCopy(mpRenderer, pMessage, &source, &destination);
+    SDL_FreeSurface(pSurfaceMessage);
 }
 
 void RenderWindow::display()
