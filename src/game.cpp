@@ -8,8 +8,8 @@
 #include "Input.hpp"
 #include "World.hpp"
 
-Game::Game(RenderWindow* pWindow, std::map<const char*, SDL_Texture*>* pTextures)
-    :mpWindow(pWindow), mpTextures(pTextures), mpWorld(nullptr), mQuit(false)
+Game::Game(RenderWindow* pWindow, std::map<const char*, SDL_Texture*>* pTextures, std::map<const char*, TTF_Font*>* pFonts)
+    :mpWindow(pWindow), mpTextures(pTextures), mpFonts(pFonts), mpWorld(nullptr), mQuit(false), mMenu(true)
 {
     mpWorld = new World(mpTextures);
 }
@@ -47,9 +47,17 @@ void Game::logic()
         mpWorld->rGetLeftPlayer().stop();
     }
 
+    if (Input::isPressed(SDLK_RETURN) && mMenu)
+    {
+        mMenu = false;
+    }
 
     mpWorld->rGetLeftPlayer().update();
     mpWorld->rGetRightPlayer().update();
+    if (!mMenu)
+    {
+        mpWorld->rGetBall().update(&(mpWorld->rGetLeftPlayer()), &(mpWorld->rGetRightPlayer()));
+    }
 }
 
 void Game::loop()
@@ -82,6 +90,10 @@ void Game::loop()
 
         mpWindow->clear();
         mpWindow->render(*mpWorld);
+        if (mMenu)
+        {
+            mpWindow->renderCenter(Vector2f(0, -32.0f), "Press Return To Start", mpFonts->operator[]("VT323-32"), {255, 255, 255, 255});
+        }
         mpWindow->display();
     }
 }
