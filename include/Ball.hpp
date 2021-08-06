@@ -11,9 +11,14 @@ public:
     Ball();
     Ball(SDL_Texture* pTexture);
 
+    void reInit();
+
     void setVel(Vector2f vel);
 
     void update(Player* p1, Player* p2);
+
+    bool isOnScreen() const;
+    void setOnScreen(bool onScreen);
 private:
     Vector2f mVelocity;
     bool mDirectionLeft;
