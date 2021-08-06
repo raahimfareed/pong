@@ -1,4 +1,5 @@
 #include <map>
+#include <string>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -7,6 +8,7 @@
 #include "RenderWindow.hpp"
 #include "Input.hpp"
 #include "World.hpp"
+#include "Config.hpp"
 
 Game::Game(RenderWindow* pWindow, std::map<const char*, SDL_Texture*>* pTextures, std::map<const char*, TTF_Font*>* pFonts)
     :mpWindow(pWindow), mpTextures(pTextures), mpFonts(pFonts), mpWorld(nullptr), mQuit(false), mMenu(true)
@@ -93,6 +95,29 @@ void Game::loop()
         if (mMenu)
         {
             mpWindow->renderCenter(Vector2f(0, -32.0f), "Press Return To Start", mpFonts->operator[]("VT323-32"), {255, 255, 255, 255});
+        }
+        if (!(mpWorld->rGetBall().isOnScreen()))
+        {
+            std::string message;
+
+            if (mpWorld->rGetBall().rGetPosition().mX <= 0)
+            {
+                message = "Player 2 wins";
+            }
+            
+            if (mpWorld->rGetBall().rGetPosition().mX >= Config::screenWidth)
+            {
+                message = "Player 1 wins";
+            }
+
+            mpWindow->renderCenter(Vector2f(0, -16.0f), message.c_str(), mpFonts->operator[]("VT323-32"), { 0, 150, 0, 255 });
+            mpWindow->renderCenter(Vector2f(0, 16.0f), "Press Return to play again", mpFonts->operator[]("VT323-16"), { 255, 255, 255, 255 });
+            mpWindow->renderCenter(Vector2f(0, 32.0f), "Press q to quit", mpFonts->operator[]("VT323-16"), { 200, 200, 200, 255 });
+
+            if (Input::isPressed(SDLK_RETURN))
+            {
+                mpWorld->rGetBall().reInit();
+            }
         }
         mpWindow->display();
     }
